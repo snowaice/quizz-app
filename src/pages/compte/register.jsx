@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import { handleForm } from '../../services/formService'
+import { checkChamps, checkChampsNotEmpty, handleForm } from '../../services/formService'
 import { toast } from "react-toastify";
 import { useNavigate } from 'react-router-dom'
 import { setLocalStorage,JWT_KEY,USER_KEY } from '../../services/localStorageService';
@@ -25,7 +25,9 @@ export default function Register() {
 
     const handleSubmit = (event) => {
         event.preventDefault()
-        checkChamps(form)
+        if(checkChampsNotEmpty(form) == false){
+            return
+        }
     
         if(form.password != form.confirmPassword)
         {
@@ -43,7 +45,7 @@ export default function Register() {
                 lastName: form.lastname,
                 email: form.email,
                 password: form.password,
-                confirmpassword: form.confirmPassword
+                confirmPassword: form.confirmPassword
             })
         }).then(response => response.json())
             .then((data) => {
@@ -52,7 +54,7 @@ export default function Register() {
                     toast.error(data.status+" "+data.error);
                 } else {
                     //setLocalStorage(JWT_KEY, data.jwt)
-                    setLocalStorage(USER_KEY, data.firstName)
+                    setLocalStorage(USER_KEY, data)
                     setUser(data)
                     navigate('/')
                     toast.success("Compte enregistrer avec succès");

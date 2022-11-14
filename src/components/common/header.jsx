@@ -17,14 +17,9 @@ export default function Header() {
             {
             (user?.id) ?
                 (
-                    <li className="nav-item dropdown">
-                        <a className="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{user.username}</a>
-                        <div className="dropdown-menu">
-                            <a className="dropdown-item" href="/profil">Profil</a>
-                            <a className="dropdown-item" href="/admin">Admin</a>
-                            <a className="dropdown-item" href="/Logout">Se déconnecter</a>
-                        </div>
-                    </li>
+
+                    <NavItem url="/logout" itemName="Se déconnecter" isActive={false} />
+              
                 ) :
                 (
                   <><NavItem url="/login" itemName="Se connecter" isActive={false} /><NavItem url="/registration" itemName="S'enregistrer" isActive={false} /></>
