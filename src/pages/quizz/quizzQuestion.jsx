@@ -39,16 +39,17 @@ export default function Question() {
                 Question.map(question =>
                     
                     <>
-              
+                    {console.log(question)}
                     <div className="card text-dark mt-5">
                         <div className="card-body d-flex justify-content-between">
                             <h4 className="card-title">{question.title}</h4>
 
                             {
                                 question.answers.map(answer=>{
-                                    {console.log(answer?.title)}
+                                    return (
+                                        <p>{answer?.title}</p>
+                                    )
                                    
-                                    <span>{answer?.title}</span>
                                  
                                 })
                             }
