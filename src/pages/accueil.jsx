@@ -8,6 +8,8 @@ export default function Accueil() {
             <h1 className='text-center mt-3'>Quizz Ultime</h1>
         </div>
         
-           
+        
+
+
     )
 }
