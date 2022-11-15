@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import { setLocalStorage,JWT_KEY,USER_KEY } from '../../services/localStorageService';
 import { UserContext } from '../../services/userContextService'
 import { PATH } from '../../services/communService';
+import {decode as base64_decode, encode as base64_encode} from 'base-64';
 
 export default function Register() {
     const { setUser } = useContext(UserContext)
@@ -41,6 +42,7 @@ export default function Register() {
                 'content-type': 'application/json'
             },
             body: JSON.stringify({
+                userName: form.firstname,
                 firstName: form.firstname,
                 lastName: form.lastname,
                 email: form.email,
@@ -53,6 +55,7 @@ export default function Register() {
                 if(data.error){
                     toast.error(data.status+" "+data.error);
                 } else {
+                    data["mdp"] = base64_encode(form.email+":"+form.password)
                     //setLocalStorage(JWT_KEY, data.jwt)
                     setLocalStorage(USER_KEY, data)
                     setUser(data)

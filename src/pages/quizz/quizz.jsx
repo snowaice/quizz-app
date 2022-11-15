@@ -2,29 +2,34 @@ import React, { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { PATH } from '../../services/communService'
+import { getLocalStorage } from '../../services/localStorageService'
 import { UserContext } from '../../services/userContextService'
 
 export default function Quizz() {
     const { user } = useContext(UserContext)
     const [Quizz, setQuizz] = useState([])
     useEffect(() => {
-    fetch(PATH+"/api/quizz", {
-        method: 'GET',
-        headers: {
-            'content-type': 'application/json'
-        },
-        mode: 'cors',
-    }).then(response => response.json())
-        .then((data) => {
-            console.log(data)
-            if(data.error){
-                toast.error("Erreur Chargement des Quizz");
-            } else {
-                setQuizz(data)
-            }
-        })
+    if(user?.mdp != null){
+        fetch(PATH+"/api/quizz", {
+            method: 'GET',
+            headers: {
+                'content-type': 'application/json',
+                "Authorization" : `Basic ${user?.mdp}`
+            },
+        }).then(response => response.json())
+            .then((data) => {
+                console.log(data)
+                if(data.error){
+                    toast.error("Erreur Chargement des Quizz");
+                } else {
+                    setQuizz(data)
+                }
+            })
+        
+    }
     },
     [])
+
     
 
     return (

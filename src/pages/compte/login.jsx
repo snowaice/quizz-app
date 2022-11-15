@@ -5,6 +5,7 @@ import { UserContext } from '../../services/userContextService'
 import { handleForm } from '../../services/formService'
 import { toast } from "react-toastify";
 import { PATH } from '../../services/communService'
+import {decode as base64_decode, encode as base64_encode} from 'base-64';
 
 export default function Login() {
 
@@ -44,6 +45,8 @@ export default function Login() {
                         progress: undefined,
                     });
                 } else {
+                    data["mdp"] =  base64_encode(form.email+":"+form.password);
+
                     setLocalStorage(USER_KEY, data)
                     setUser(data)
                     navigate('/')

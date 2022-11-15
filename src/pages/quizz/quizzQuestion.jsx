@@ -12,7 +12,8 @@ export default function Question() {
     fetch(PATH+`/api/questions/${id}`, {
         method: 'GET',
         headers: {
-            'content-type': 'application/json'
+            'content-type': 'application/json',
+            "Authorization" : `Basic ${user?.mdp}`
         },
         mode: 'cors',
     }).then(response => response.json())
@@ -44,13 +45,24 @@ export default function Question() {
                         <div className="card-body d-flex justify-content-between">
                             <h4 className="card-title">{question.title}</h4>
 
+                        </div>
+                        <div className='card-footer'>
+                            
                             {
+                                
                                 question.answers.map(answer=>{
                                     return (
-                                        <p>{answer?.title}</p>
+                                        <>
+
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name={"radioQuestion"+question.id}  id={"radio" + answer?.id} value={answer?.id}/>
+                                                <label class="form-check-label" for={"radio" + answer?.id}>
+                                                    {answer?.title}
+                                                </label>
+                                            </div>
+                                       
+                                        </>
                                     )
-                                   
-                                 
                                 })
                             }
                         </div>
