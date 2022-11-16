@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react'
 import React, { useContext, useEffect, useState } from 'react'
-import { useLocation, useParams } from 'react-router-dom'
+import { Navigate, useLocation, useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { PATH } from '../../services/communService'
 import { checkChampsNotEmpty, handleForm, toArray } from '../../services/formService'
@@ -11,17 +11,18 @@ export default function Question() {
     let { state } = useLocation();
 
     let isAnswered = state;
-
+    const navigation = useNavigate()
     let { id } = useParams();
     const { user } = useContext(UserContext)
     const [Question, setQuestion] = useState([])
     const [AnswerUser, setAnswerUser] = useState([])
-   
-
+    let checked = false;
+    let valid = "";
+    let isOK = "";
+    
     const [form,setForm] = useState({
        
     })
-    let checked = false;
 
     const handleSubmit = (event) => {
         event.preventDefault()
@@ -44,6 +45,11 @@ export default function Question() {
                         id:parseInt(user.id)
                     }]
                 })
+            }).then(response => response.json())
+            .then((data) => {
+                
+                // OnLogin Successfully
+                navigation(`/quizz/${id}`,{state :true, replace:true})
             })
         });
 
@@ -100,6 +106,7 @@ export default function Question() {
 
     return (
        <>
+    
             <div className='container'>
                 <h1 className='text-center mt-3'>Questions</h1>
             </div>
@@ -110,61 +117,65 @@ export default function Question() {
                 Question.map(question =>
    
                     <>
-                        <div className="row align-items-md-stretch mt-5">
+                        <div key={question.id} className="row align-items-md-stretch mt-5">
                             <div className="col-12">
                                 <div className="h-100 p-5 bg-dark text-white rounded-3">
                                     <h2 className='text-white'>{question.title}</h2>
-                          
-    
                                 
                                     {
                                         
                                         question.answers.map(answer=>
-                                            
-                                           // {
-                                           //     if(isAnswered){
-                                           //         <>
-                                           //         <input onChange={handleChange} className="form-check-input"  type="radio" name={question.id}  id={"radio" + answer?.id} value={answer?.id} required/>
-                                           //         <label className="form-check-label" htmlFor={"radio" + answer?.id}>
-                                           //             {answer?.title}
-                                           //         </label>
-                                           //         </>)
-                                           //     }
-                                           // }
-                                            <>
-                                     
-                                                <div className="form-check fs-5 mt-3">
-                                                {checked = false}
-                                            
-                                                {
+                                            {   
+                                                checked = false;
+                                                valid = "d-block btn btn-outline-info ";
+                                                if(isAnswered){
+                                                    valid = "d-none btn btn-outline-info ";
+                                                    if(answer.rightWrong === true){
+                                                        isOK = "form-check-label  text-success";
+                                                    }else{
+                                                        isOK = "form-check-label  text-danger";
+                                                    }
+
+                                                    return(
+                                                        <>
+                                                            <div key={answer.id} className="form-check fs-5 mt-3">
+
+                                                                {
+                                                                
+                                                                toArray(AnswerUser).map(answerUser=>
+                                                                {
+                                                                    if(parseInt(answerUser[1]["id"]) === parseInt(answer.id)){
+                                                                        checked =true;
+                                                                        
+                                                                    }
+                                                                })
+                                                                
+                                                                } 
+                                                         
+                                                                <input className="form-check-input" checked={checked} disabled type="radio" name={question.id}  id={"radio" + answer?.id} value={answer?.id} required/>
+                                                                <label className={isOK}  htmlFor={"radio" + answer?.id}>
+                                                                    {answer?.title}
+                                                                </label>
+                                                                    
+                                                            </div> 
+                                                            
+                                                        </>
+                                                    )
                                                 
-                                                toArray(AnswerUser).map(answerUser=>
-                                                {   
-                                                    if(parseInt(answerUser[1]["id"]) === parseInt(answer.id)){
-                                                        return (
-                                                            <>
-                                                                <input onChange={handleChange} className="form-check-input" checked disabled type="radio" name={question.id}  id={"radio" + answer?.id} value={answer?.id} required/>
+                                                }else{
+                                                    return(
+                                                        <>
+                                                            <div key={answer.id}  className="form-check fs-5 mt-3">
+                                                                <input onChange={handleChange} className="form-check-input"  type="radio" name={question.id}  id={"radio" + answer?.id} value={answer?.id} required/>
                                                                 <label className="form-check-label" htmlFor={"radio" + answer?.id}>
                                                                     {answer?.title}
                                                                 </label>
-                                                            </>
-                                                        )
-                                                    
-                                                    
-                                                    }else{
-                                                      
-                                                    }
-                                                })
+                                                            </div>
+                                                        </>
+                                                    )
+                                                }
+                                            }   
                                             
-                                                } 
-
-                                                
-                                           
-                                       
-                                                
-                                            </div> 
-                                                
-                                            </>
                                             
                                         )
 
@@ -179,7 +190,7 @@ export default function Question() {
             
             }
                 <div className='d-flex justify-content-center mt-5 mb-5'>
-                    <button className='btn btn-outline-info ' name="validateQuizz">Validation du quizz</button>
+                    <button className={valid} name="validateQuizz">Validation du quizz</button>
                 </div>
             </form>
             </div>

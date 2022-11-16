@@ -37,7 +37,7 @@ export default function ClassementUser({quizzId}) {
                 
                 toArray(UserClassement).map(function (value, key) {
                     return (
-                        <p> {value[0]} : {value[1]} </p>
+                        <p key={value[0]}> {value[0]} : {value[1]} </p>
                     )
                 })
             }

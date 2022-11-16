@@ -43,7 +43,7 @@ export default function Classement() {
                  
                     <>
                     {console.log(user)}
-                    <div className="card text-dark mt-5">
+                    <div key={quizz.id} className="card text-dark mt-5">
                         <div className="card-body d-flex justify-content-between">
                             <h4 className="card-title">{quizz.title}</h4>
                             
