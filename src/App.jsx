@@ -1,17 +1,16 @@
-import logo from './logo.svg';
 import './App.css';
 import React, { useState } from 'react';
 import { Routes, Route } from "react-router-dom";
 import Accueil from './pages/accueil';
 import Header from './components/common/header';
 import Register from './pages/compte/register';
-import Appscc from './pages/compte/login';
 import { contextPrototype, UserContext } from './services/userContextService';
 import Footer from './components/common/footer';
 import Login from './pages/compte/login';
 import { getLocalStorage, USER_KEY } from './services/localStorageService';
 import Logout from './pages/compte/logout';
 import Question from './pages/quizz/quizzQuestion';
+import Classement from './pages/quizz/classement';
 
 function App() {
 
@@ -29,6 +28,7 @@ function App() {
               <Route path='/registration' element={<Register/>}/>
               <Route path='/login' element={<Login/>}/>
               <Route path='/logout' element={<Logout/>}/>
+              <Route path='/classement' element={<Classement/>}/>
               <Route path='/quizz/:id' element={<Question/>}/>
               
         </Routes>

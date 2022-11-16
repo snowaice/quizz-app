@@ -1,11 +1,11 @@
 import React, { useContext, useState } from 'react'
-import { checkChamps, checkChampsNotEmpty, handleForm } from '../../services/formService'
+import { checkChampsNotEmpty, handleForm } from '../../services/formService'
 import { toast } from "react-toastify";
 import { useNavigate } from 'react-router-dom'
-import { setLocalStorage,JWT_KEY,USER_KEY } from '../../services/localStorageService';
+import { setLocalStorage,USER_KEY } from '../../services/localStorageService';
 import { UserContext } from '../../services/userContextService'
 import { PATH } from '../../services/communService';
-import {decode as base64_decode, encode as base64_encode} from 'base-64';
+import {encode as base64_encode} from 'base-64';
 
 export default function Register() {
     const { setUser } = useContext(UserContext)
@@ -26,11 +26,11 @@ export default function Register() {
 
     const handleSubmit = (event) => {
         event.preventDefault()
-        if(checkChampsNotEmpty(form) == false){
+        if(checkChampsNotEmpty(form) === false){
             return
         }
     
-        if(form.password != form.confirmPassword)
+        if(form.password !== form.confirmPassword)
         {
             toast.error("Mot de passe différent");
             return

@@ -1,11 +1,11 @@
 import React, { useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { JWT_KEY, setLocalStorage, USER_KEY } from '../../services/localStorageService'
+import { setLocalStorage, USER_KEY } from '../../services/localStorageService'
 import { UserContext } from '../../services/userContextService'
 import { handleForm } from '../../services/formService'
 import { toast } from "react-toastify";
 import { PATH } from '../../services/communService'
-import {decode as base64_decode, encode as base64_encode} from 'base-64';
+import { encode as base64_encode } from 'base-64';
 
 export default function Login() {
 
