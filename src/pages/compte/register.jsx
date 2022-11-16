@@ -55,8 +55,7 @@ export default function Register() {
                 if(data.error){
                     toast.error(data.status+" "+data.error);
                 } else {
-                    data["mdp"] = base64_encode(form.email+":"+form.password)
-                    //setLocalStorage(JWT_KEY, data.jwt)
+                    data["token"] = base64_encode(form.email+":"+form.password)
                     setLocalStorage(USER_KEY, data)
                     setUser(data)
                     navigate('/')

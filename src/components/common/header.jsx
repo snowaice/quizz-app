@@ -1,6 +1,8 @@
 import React,{ useContext} from 'react'
 import NavItem from './navItem'
+
 import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { UserContext } from '../../services/userContextService';
 
 export default function Header() {
@@ -18,7 +20,7 @@ export default function Header() {
             (user?.id) ?
                 (
                     <>
-                      <NavItem url="/classement" itemName="Classement par quizz" isActive={false} />
+                      <NavItem url="/classement" itemName="Classement" isActive={false} />
                       <NavItem url="/logout" itemName="Se déconnecter" isActive={false} />
                     </>
                     

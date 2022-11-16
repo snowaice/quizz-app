@@ -1,4 +1,3 @@
-import { render } from '@testing-library/react'
 import React, { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
@@ -12,42 +11,42 @@ export default function Quizz() {
     const [QuizzCheck, setQuizzCheck] = useState([])
     let result = false;
     useEffect(() => {
-    if(user?.mdp != null){
+
         fetch(PATH+"/api/quizz", {
             method: 'GET',
             headers: {
                 'content-type': 'application/json',
-                "Authorization" : `Basic ${user?.mdp}`
+                "Authorization" : `Basic ${user?.token}`
             },
         }).then(response => response.json())
             .then((data) => {
                 console.log(data)
                 if(data.error){
-                    toast.error("Erreur Chargement des Quizz");
+                    toast.error("Erreur Chargement des Quizz 1");
                 } else {
                     setQuizz(data)
                 }
             })
         
-    }
-
+    
+    if(user?.id != null){
     fetch(PATH+`/api/user/quizz/${user.id}`, {
         method: 'GET',
         headers: {
             'content-type': 'application/json',
-            "Authorization" : `Basic ${user?.mdp}`
+            "Authorization" : `Basic ${user?.token}`
         },
     }).then(response => response.json())
         .then((data) => {
             console.log(data)
             if(data.error){
-                toast.error("Erreur Chargement des Quizz");
+                toast.error("Erreur Chargement des Quizz 2");
             } else {
                 setQuizzCheck(data)
             }
         })
     
-
+    }
     },
     [user])
 
@@ -69,6 +68,7 @@ export default function Quizz() {
                             if(parseInt(quizzCheck[0]) === parseInt(quizz.id)){
                                 result = true
                             }
+                            return(<></>)
                         }
                     )
                 
@@ -87,19 +87,6 @@ export default function Quizz() {
                                         ):(
                                             <Link to={`/quizz/${quizz.id}`} state={false}><button className='btn btn-outline-info'>Participer</button> </Link>
                                         )
-                                     
-                                          
-                                      //  <Link to={`/quizz/${quizz.id}`}  state={true}><button className='btn btn-outline-info'>Voir mes résultats</button> </Link>;
-                                      //      
-                                      //  <Link to={`/quizz/${quizz.id}`} state={false}><button className='btn btn-outline-info'>Participer</button> </Link>;
-                                  
-
-                                        
-                                
-                             
-                                        
-                                      //  {result}
-                                   
                                     ): (
                                         <button className='btn btn-outline-info btn-sm'>Pour participer aux quizz veuillez vous connecter</button>
                                     )

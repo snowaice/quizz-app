@@ -8,12 +8,12 @@ export default function Classement() {
  const { user } = useContext(UserContext)
     const [Quizz, setQuizz] = useState([])
     useEffect(() => {
-    if(user?.mdp != null){
+    if(user?.token != null){
         fetch(PATH+"/api/quizz", {
             method: 'GET',
             headers: {
                 'content-type': 'application/json',
-                "Authorization" : `Basic ${user?.mdp}`
+                "Authorization" : `Basic ${user?.token}`
             },
         }).then(response => response.json())
             .then((data) => {
@@ -32,7 +32,7 @@ export default function Classement() {
     
 
     return (
-       <>
+       <div className='container mb-5'>
             <div className='container'>
                 <h1 className='text-center mt-3'>Classment</h1>
             </div>
@@ -44,7 +44,7 @@ export default function Classement() {
                     <>
                     {console.log(user)}
                     <div key={quizz.id} className="card text-dark mt-5">
-                        <div className="card-body d-flex justify-content-between">
+                        <div className="card-body d-flex justify-content-center">
                             <h4 className="card-title">{quizz.title}</h4>
                             
                         </div>
@@ -64,6 +64,6 @@ export default function Classement() {
                 )
             
             }
-        </>
+        </div>
     )
 }

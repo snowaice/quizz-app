@@ -45,8 +45,13 @@ export default function Login() {
                         progress: undefined,
                     });
                 } else {
-                    data["mdp"] =  base64_encode(form.email+":"+form.password);
-
+                    data["token"] =  base64_encode(form.email+":"+form.password);
+                    toast.success("Connecté", {
+                        position: "top-right",
+                        pauseOnHover: true,
+                        draggable: false,
+                        progress: undefined,
+                    });
                     setLocalStorage(USER_KEY, data)
                     setUser(data)
                     navigate('/')

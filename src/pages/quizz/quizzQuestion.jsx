@@ -1,6 +1,6 @@
-import { render } from '@testing-library/react'
+
 import React, { useContext, useEffect, useState } from 'react'
-import { Navigate, useLocation, useNavigate, useParams } from 'react-router-dom'
+import {  useLocation, useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { PATH } from '../../services/communService'
 import { checkChampsNotEmpty, handleForm, toArray } from '../../services/formService'
@@ -37,7 +37,7 @@ export default function Question() {
                 method: 'POST',
                 headers: {
                     'content-type': 'application/json',
-                    "Authorization" : `Basic ${user?.mdp}`
+                    "Authorization" : `Basic ${user?.token}`
                 },
                 body: JSON.stringify({
                     id: parseInt(list),
@@ -60,7 +60,7 @@ export default function Question() {
         method: 'GET',
         headers: {
             'content-type': 'application/json',
-            "Authorization" : `Basic ${user?.mdp}`
+            "Authorization" : `Basic ${user?.token}`
         },
         mode: 'cors',
     }).then(response => response.json())
@@ -74,11 +74,11 @@ export default function Question() {
         })
 
         if(isAnswered){
-            fetch(PATH+`/api/user/aswers/${user.id}/quizz/${id}`, {
+            fetch(PATH+`/api/user/answers/${user.id}/quizz/${id}`, {
                 method: 'GET',
                 headers: {
                     'content-type': 'application/json',
-                    "Authorization" : `Basic ${user?.mdp}`
+                    "Authorization" : `Basic ${user?.token}`
                 },
                 mode: 'cors',
             }).then(response => response.json())
@@ -145,9 +145,9 @@ export default function Question() {
                                                                 toArray(AnswerUser).map(answerUser=>
                                                                 {
                                                                     if(parseInt(answerUser[1]["id"]) === parseInt(answer.id)){
-                                                                        checked =true;
-                                                                        
+                                                                       checked =true 
                                                                     }
+                                                                    
                                                                 })
                                                                 
                                                                 } 

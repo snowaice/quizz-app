@@ -7,12 +7,12 @@ export default function ClassementUser({quizzId}) {
     const { user } = useContext(UserContext)
     const [UserClassement, setUserClassement] = useState([])
     useEffect(() => {
-    if(user?.mdp != null){
+    if(user?.token != null){
         fetch(PATH+`/api/quizz/score/${quizzId}`, {
             method: 'GET',
             headers: {
                 'content-type': 'application/json',
-                "Authorization" : `Basic ${user?.mdp}`
+                "Authorization" : `Basic ${user?.token}`
             },
         }).then(response => response.json())
             .then((data) => {
@@ -33,14 +33,33 @@ export default function ClassementUser({quizzId}) {
     return (
         
         <>
+            <table className="table">
+                <thead className="thead-dark bg-dark text-white">
+                    <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Utilisateur</th>
+                    <th scope="col">Score</th>
+                    </tr>
+                </thead>
+                <tbody>
+                   
             {
                 
-                toArray(UserClassement).map(function (value, key) {
+                toArray(UserClassement).sort((a, b) => b[1] - a[1]).map(function (value, key) {
+
                     return (
-                        <p key={value[0]}> {value[0]} : {value[1]} </p>
+                            <tr className='text-dark'>
+                                <th scope="row">{key+1}</th>
+                                <td>{value[0]}</td>
+                                <td>{value[1]} / 5</td>
+                            </tr>
+                                
+              
                     )
                 })
             }
+                </tbody>
+            </table>
         </>
      )
 
