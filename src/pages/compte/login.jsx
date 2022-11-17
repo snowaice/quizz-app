@@ -38,7 +38,7 @@ export default function Login() {
             .then((data) => {
                 console.log(data)
                 if(data.error){
-                    toast.error("Erreur de connexion", {
+                    toast.error("Identifiant ou mot de passe incorrect", {
                         position: "top-right",
                         pauseOnHover: true,
                         draggable: false,
