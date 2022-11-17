@@ -10,7 +10,6 @@ export function handleForm(event, observable, majFonction){
 
 export function toArray(obj){
     let array = Object.entries(obj)
-    
    return array
 }
 

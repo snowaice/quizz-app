@@ -19,9 +19,8 @@ export default function Header() {
             {
             (user?.id) ?
                 (
-                    <>
+                    <>        
                       <NavItem url="/classement" itemName="Classement" isActive={false} />
-                      <NavItem url="/logout" itemName="Se déconnecter" isActive={false} />
                     </>
                     
               
@@ -29,8 +28,21 @@ export default function Header() {
                 (
                   <><NavItem url="/login" itemName="Se connecter" isActive={false} /><NavItem url="/registration" itemName="S'enregistrer" isActive={false} /></>
                 )
+            
             }
           </ul>
+          {
+             (user?.id) ?(
+              <>
+                <span className='nav-item'><a class="nav-link">Connecté en tant que : {user.username}</a></span>
+                <span className='nav-item'><a class="nav-link" href="/logout">Se déconnecter</a></span>
+               
+              </>
+             ):(
+              ""
+             )
+          }
+      
         </div>
       </div>
       <ToastContainer />
